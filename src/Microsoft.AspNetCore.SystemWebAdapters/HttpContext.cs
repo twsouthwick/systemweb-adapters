@@ -41,6 +41,10 @@ public class HttpContext : IServiceProvider
 
     public HttpServerUtility Server => _server ??= new(_context);
 
+    public RequestNotification CurrentNotification => _context.Features.GetRequired<INotificationFeature>().CurrentNotification;
+
+    public bool IsPostNotification => _context.Features.GetRequired<INotificationFeature>().IsPostNotification;
+
     public Cache Cache => _context.RequestServices.GetRequiredService<Cache>();
 
     /// <summary>
@@ -52,6 +56,26 @@ public class HttpContext : IServiceProvider
     {
         get => _context.User;
         set => _context.User = value is ClaimsPrincipal claims ? claims : new ClaimsPrincipal(value);
+    }
+
+    public IHttpHandler? Handler
+    {
+        get => _context.Features.GetRequired<IHttpHandlerFeature>().Current;
+        set => _context.Features.GetRequired<IHttpHandlerFeature>().Current = value;
+    }
+
+    public IHttpHandler? CurrentHandler => Handler;
+
+    public IHttpHandler? PreviousHandler => _context.Features.GetRequired<IHttpHandlerFeature>().Previous;
+
+    public void RemapHandler(IHttpHandler handler)
+    {
+        if (CurrentNotification >= RequestNotification.MapRequestHandler)
+        {
+            throw new InvalidOperationException("RemapHandler must be called before CurrentNotification == RequestNotification.MapRequestHandler");
+        }
+
+        Handler = handler;
     }
 
     public HttpSessionState? Session => _context.Features.Get<HttpSessionState>();

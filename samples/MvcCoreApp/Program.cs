@@ -17,6 +17,8 @@ builder.Services.AddAuthentication()
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddSystemWebAdapters()
+    .AddHttpApplication<MyApp>()
+    .AddHttpModule<MyModule>()
     .AddRemoteAppClient(remote => remote
         .Configure(options =>
         {
@@ -41,9 +43,6 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
-app.UseAuthentication();
-app.UseAuthorization();
 
 app.UseSystemWebAdapters();
 
@@ -74,3 +73,47 @@ app.UseEndpoints(endpoints =>
 });
 
 app.Run();
+
+class MyApp : System.Web.HttpApplication
+{
+    protected void Application_Start()
+    {
+    }
+
+    protected void Application_BeginRequest()
+    {
+    }
+}
+
+class MyModule : System.Web.IHttpModule
+{
+    public void Dispose()
+    {
+    }
+
+    public void Init(System.Web.HttpApplication application)
+    {
+        application.BeginRequest += (s, e) =>
+        {
+            var context = ((System.Web.HttpApplication)s!).Context!;
+        };
+
+        var handler = new MyHandler();
+
+        application.MapRequestHandler += (s, e) =>
+        {
+            var context = ((System.Web.HttpApplication)s!).Context!;
+            context.Handler = handler;
+        };
+    }
+}
+
+class MyHandler : System.Web.IHttpHandler
+{
+    public bool IsReusable => throw new NotImplementedException();
+
+    public void ProcessRequest(System.Web.HttpContext context)
+    {
+        context.Response.Write("Hello");
+    }
+}

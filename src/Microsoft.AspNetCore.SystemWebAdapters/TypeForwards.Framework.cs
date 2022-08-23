@@ -1,6 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+[assembly:System.Runtime.CompilerServices.TypeForwardedTo(typeof(System.Web.HttpApplication))]
 [assembly:System.Runtime.CompilerServices.TypeForwardedTo(typeof(System.Web.HttpBrowserCapabilities))]
 [assembly:System.Runtime.CompilerServices.TypeForwardedTo(typeof(System.Web.HttpBrowserCapabilitiesBase))]
 [assembly:System.Runtime.CompilerServices.TypeForwardedTo(typeof(System.Web.HttpBrowserCapabilitiesWrapper))]
@@ -24,8 +25,13 @@
 [assembly:System.Runtime.CompilerServices.TypeForwardedTo(typeof(System.Web.HttpServerUtilityWrapper))]
 [assembly:System.Runtime.CompilerServices.TypeForwardedTo(typeof(System.Web.HttpSessionStateBase))]
 [assembly:System.Runtime.CompilerServices.TypeForwardedTo(typeof(System.Web.HttpSessionStateWrapper))]
+[assembly:System.Runtime.CompilerServices.TypeForwardedTo(typeof(System.Web.HttpTaskAsyncHandler))]
 [assembly:System.Runtime.CompilerServices.TypeForwardedTo(typeof(System.Web.HttpUnhandledException))]
+[assembly:System.Runtime.CompilerServices.TypeForwardedTo(typeof(System.Web.IHttpAsyncHandler))]
+[assembly:System.Runtime.CompilerServices.TypeForwardedTo(typeof(System.Web.IHttpHandler))]
+[assembly:System.Runtime.CompilerServices.TypeForwardedTo(typeof(System.Web.IHttpModule))]
 [assembly:System.Runtime.CompilerServices.TypeForwardedTo(typeof(System.Web.ISubscriptionToken))]
+[assembly:System.Runtime.CompilerServices.TypeForwardedTo(typeof(System.Web.RequestNotification))]
 
 #if NET472_OR_GREATER
 [assembly:System.Runtime.CompilerServices.TypeForwardedTo(typeof(System.Web.SameSiteMode))]
@@ -40,3 +46,5 @@
 [assembly:System.Runtime.CompilerServices.TypeForwardedTo(typeof(System.Web.Caching.CacheItemUpdateReason))]
 [assembly:System.Runtime.CompilerServices.TypeForwardedTo(typeof(System.Web.Configuration.HttpCapabilitiesBase))]
 [assembly:System.Runtime.CompilerServices.TypeForwardedTo(typeof(System.Web.SessionState.HttpSessionState))]
+[assembly:System.Runtime.CompilerServices.TypeForwardedTo(typeof(System.Web.SessionState.IReadOnlySessionState))]
+[assembly:System.Runtime.CompilerServices.TypeForwardedTo(typeof(System.Web.SessionState.IRequiresSessionState))]

@@ -6,9 +6,8 @@ using System.Web.Caching;
 using System.Web.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SystemWebAdapters;
-using Microsoft.AspNetCore.SystemWebAdapters.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -19,7 +18,7 @@ public static class SystemWebAdaptersExtensions
         services.AddHttpContextAccessor();
         services.AddSingleton<Cache>();
         services.AddSingleton<BrowserCapabilitiesFactory>();
-        services.AddTransient<IStartupFilter, HttpContextStartupFilter>();
+        services.AddTransient<IStartupFilter, SystemWebAdaptersStartupFilter>();
 
         return new SystemWebAdapterBuilder(services)
             .AddMvc();
@@ -27,12 +26,16 @@ public static class SystemWebAdaptersExtensions
 
     public static void UseSystemWebAdapters(this IApplicationBuilder app)
     {
+        app.UseHttpApplicationAuth();
+
+        app.UseMiddleware<HttpApplicationMiddleEventsMiddleware>();
+        app.UseMiddleware<SessionMiddleware>();
         app.UseMiddleware<DefaultCacheControlMiddleware>();
         app.UseMiddleware<PreBufferRequestStreamMiddleware>();
-        app.UseMiddleware<SessionMiddleware>();
         app.UseMiddleware<BufferResponseStreamMiddleware>();
         app.UseMiddleware<SingleThreadedRequestMiddleware>();
         app.UseMiddleware<CurrentPrincipalMiddleware>();
+        app.UseMiddleware<HttpApplicationEventsHandlerMiddleware>();
     }
 
     /// <summary>
@@ -56,12 +59,39 @@ public static class SystemWebAdaptersExtensions
         where TBuilder : IEndpointConventionBuilder
         => builder.WithMetadata(metadata ?? new BufferResponseStreamAttribute());
 
-    internal class HttpContextStartupFilter : IStartupFilter
+    internal class SystemWebAdaptersStartupFilter : IStartupFilter
     {
+        private readonly IOptions<HttpApplicationOptions> _options;
+
+        public SystemWebAdaptersStartupFilter(IOptions<HttpApplicationOptions> options)
+        {
+            _options = options;
+        }
+
         public Action<IApplicationBuilder> Configure(Action<IApplicationBuilder> next)
             => builder =>
             {
+                var options = _options.Value;
+                
                 builder.UseMiddleware<SetHttpContextTimestampMiddleware>();
+
+                if (options.SetCurrentNotification)
+                {
+                    builder.UseMiddleware<SetNotificationMiddleware>();
+                }
+
+                if (options.EnableHttpApplication)
+                {
+                    builder.UseMiddleware<SetHttpApplicationMiddleware>();
+                }
+
+                if (options.EnableHandlers)
+                {
+                    builder.UseMiddleware<SetHttpHandlerMiddleware>();
+                }
+
+                builder.UseMiddleware<HttpApplicationEventsMiddleware.BeginEnd>();
+
                 next(builder);
             };
     }
