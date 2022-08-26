@@ -31,13 +31,12 @@
 [assembly:System.Runtime.CompilerServices.TypeForwardedTo(typeof(System.Web.IHttpHandler))]
 [assembly:System.Runtime.CompilerServices.TypeForwardedTo(typeof(System.Web.IHttpModule))]
 [assembly:System.Runtime.CompilerServices.TypeForwardedTo(typeof(System.Web.ISubscriptionToken))]
-[assembly:System.Runtime.CompilerServices.TypeForwardedTo(typeof(System.Web.RequestNotification))]
 [assembly:System.Runtime.CompilerServices.TypeForwardedTo(typeof(System.Web.ReadEntityBodyMode))]
+[assembly:System.Runtime.CompilerServices.TypeForwardedTo(typeof(System.Web.RequestNotification))]
 
 #if NET472_OR_GREATER
-[assembly:System.Runtime.CompilerServices.TypeForwardedTo(typeof(System.Web.SameSiteMode))]
+[assembly: System.Runtime.CompilerServices.TypeForwardedTo(typeof(System.Web.SameSiteMode))]
 #endif
-
 [assembly:System.Runtime.CompilerServices.TypeForwardedTo(typeof(System.Web.Caching.Cache))]
 [assembly:System.Runtime.CompilerServices.TypeForwardedTo(typeof(System.Web.Caching.CacheDependency))]
 [assembly:System.Runtime.CompilerServices.TypeForwardedTo(typeof(System.Web.Caching.CacheItemPriority))]

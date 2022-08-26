@@ -253,6 +253,7 @@ namespace System.Web
         public virtual byte[] BinaryRead(int count) { throw new System.PlatformNotSupportedException("Only support when running on ASP.NET Core or System.Web");}
         public virtual System.IO.Stream GetBufferedInputStream() { throw new System.PlatformNotSupportedException("Only support when running on ASP.NET Core or System.Web");}
         public virtual System.IO.Stream GetBufferlessInputStream() { throw new System.PlatformNotSupportedException("Only support when running on ASP.NET Core or System.Web");}
+        public static implicit operator System.Web.HttpRequestBase (Microsoft.AspNetCore.Http.HttpRequest request) { throw new System.PlatformNotSupportedException("Only support when running on ASP.NET Core or System.Web");}
     }
     public partial class HttpRequestWrapper : System.Web.HttpRequestBase
     {
@@ -351,6 +352,7 @@ namespace System.Web
         public virtual void ClearContent() { throw new System.PlatformNotSupportedException("Only support when running on ASP.NET Core or System.Web");}
         public virtual void ClearHeaders() { throw new System.PlatformNotSupportedException("Only support when running on ASP.NET Core or System.Web");}
         public virtual void End() { throw new System.PlatformNotSupportedException("Only support when running on ASP.NET Core or System.Web");}
+        public static implicit operator System.Web.HttpResponseBase (Microsoft.AspNetCore.Http.HttpResponse response) { throw new System.PlatformNotSupportedException("Only support when running on ASP.NET Core or System.Web");}
         public virtual void SetCookie(System.Web.HttpCookie cookie) { throw new System.PlatformNotSupportedException("Only support when running on ASP.NET Core or System.Web");}
         public virtual void TransmitFile(string filename) { throw new System.PlatformNotSupportedException("Only support when running on ASP.NET Core or System.Web");}
         public virtual void TransmitFile(string filename, long offset, long length) { throw new System.PlatformNotSupportedException("Only support when running on ASP.NET Core or System.Web");}
@@ -496,6 +498,13 @@ namespace System.Web
         bool IsActive { get; }
         void Unsubscribe();
     }
+    public enum ReadEntityBodyMode
+    {
+        Buffered = 3,
+        Bufferless = 2,
+        Classic = 1,
+        None = 0,
+    }
     [System.FlagsAttribute]
     public enum RequestNotification
     {
@@ -512,13 +521,6 @@ namespace System.Web
         ResolveRequestCache = 8,
         SendResponse = 536870912,
         UpdateRequestCache = 512,
-    }
-    public enum ReadEntityBodyMode
-    {
-        Buffered = 3,
-        Bufferless = 2,
-        Classic = 1,
-        None = 0,
     }
     public enum SameSiteMode
     {
