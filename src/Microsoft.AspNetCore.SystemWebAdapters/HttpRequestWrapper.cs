@@ -21,6 +21,7 @@ namespace System.Web
 
         public override void Abort() => _request.Abort();
 
+        [Obsolete(HttpRequest.UseBinaryReadAsync)]
         public override byte[] BinaryRead(int count) => _request.BinaryRead(count);
 
         public override Encoding? ContentEncoding => _request.ContentEncoding;
@@ -39,6 +40,7 @@ namespace System.Web
 
         public override string HttpMethod => _request.HttpMethod;
 
+        [Obsolete(HttpRequest.UseGetInputStreamAsync)]
         public override Stream InputStream => _request.InputStream;
 
         public override Stream GetBufferedInputStream() => _request.GetBufferedInputStream();
@@ -61,6 +63,7 @@ namespace System.Web
 
         public override string RequestType => _request.RequestType;
 
+        [Obsolete(HttpRequest.UseGetTotalBytesAsync)]
         public override int TotalBytes => _request.TotalBytes;
 
         public override Uri Url => _request.Url;

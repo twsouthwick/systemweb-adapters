@@ -50,6 +50,7 @@ namespace System.Web
             set => throw new NotImplementedException();
         }
 
+        [Obsolete(HttpRequest.UseGetInputStreamAsync)]
         public virtual Stream InputStream => throw new NotImplementedException();
 
         public virtual Stream GetBufferedInputStream() => throw new NotImplementedException();
@@ -70,6 +71,7 @@ namespace System.Web
 
         public virtual Uri? UrlReferrer => throw new NotImplementedException();
 
+        [Obsolete(HttpRequest.UseGetTotalBytesAsync)]
         public virtual int TotalBytes => throw new NotImplementedException();
 
         public virtual bool IsAuthenticated => throw new NotImplementedException();
@@ -82,6 +84,7 @@ namespace System.Web
 
         public virtual HttpBrowserCapabilitiesBase Browser => throw new NotImplementedException();
 
+        [Obsolete(HttpRequest.UseBinaryReadAsync)]
         public virtual byte[] BinaryRead(int count) => throw new NotImplementedException();
 
         public virtual void Abort() => throw new NotImplementedException();

@@ -1,10 +1,11 @@
+using System.Threading.Tasks;
 using System.Web;
 
 namespace ClassLibrary;
 
 public class RequestInfo
 {
-    public static void WriteRequestInfo(bool suppress)
+    public static async Task WriteRequestInfo(bool suppress)
     {
         var context = HttpContext.Current;
 
@@ -36,10 +37,10 @@ public class RequestInfo
             // Status code
             writer.Write("StatusCode", context.Response.StatusCode);
             writer.Write("StatusDescription", context.Response.StatusDescription);
-            context.Response.End();
+            await context.Response.EndAsync();
         }
 
         context.Response.SuppressContent = suppress;
-        context.Response.End();
+        await context.Response.EndAsync();
     }
 }

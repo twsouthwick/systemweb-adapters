@@ -19,8 +19,12 @@ namespace System.Web
     [SuppressMessage("Design", "CA1001:Types that own disposable fields should be disposable", Justification = "_writer is registered to be disposed by the owning HttpContext")]
     public class HttpResponse
     {
-        private const string NoContentTypeMessage = "No content type declared";
+        internal const string UseWriteFileAsync = "Use WriteFileAsync instead as this will potentially cause sync over async";
+        internal const string UseTransmitFileAsync = "Use TransmitFileAsync instead as this will potentially cause sync over async";
+        internal const string UseEndAsync = "Use EndAsync instead as this will potentially cause sync over async";
+        internal const string UseRedirectAsync = "Use RedirectPermanentAsync instead as this will potentially cause sync over async";
 
+        private const string NoContentTypeMessage = "No content type declared";
         private readonly HttpResponseCore _response;
 
         private NameValueCollection? _headers;
@@ -35,7 +39,7 @@ namespace System.Web
             _adapterFeature = FeatureReference<IHttpResponseAdapterFeature>.Default;
         }
 
-        private IHttpResponseAdapterFeature AdapterFeature => _adapterFeature.Fetch(_response.HttpContext.Features) ?? throw new InvalidOperationException($"Response buffering must be enabled on this endpoint for this API via the BufferResponseStreamAttribute metadata item");
+        internal IHttpResponseAdapterFeature AdapterFeature => _adapterFeature.Fetch(_response.HttpContext.Features) ?? throw new InvalidOperationException($"Response buffering must be enabled on this endpoint for this API via the BufferResponseStreamAttribute metadata item");
 
         internal ResponseHeaders TypedHeaders => _typedHeaders ??= new(_response.Headers);
 
@@ -184,11 +188,14 @@ namespace System.Web
         public bool IsRequestBeingRedirected => StatusCode is >= 300 and < 400;
 
         [SuppressMessage("Design", "CA1054:URI parameters should not be strings", Justification = "_writer is registered to be disposed by the owning HttpContext")]
+        [Obsolete(UseRedirectAsync)]
         public void RedirectPermanent(string url) => Redirect(url, true, true);
 
         [SuppressMessage("Design", "CA1054:URI parameters should not be strings", Justification = "_writer is registered to be disposed by the owning HttpContext")]
+        [Obsolete(UseRedirectAsync)]
         public void RedirectPermanent(string url, bool endResponse) => Redirect(url, endResponse, true);
 
+        [Obsolete(UseRedirectAsync)]
         private void Redirect(string url, bool endResponse, bool permanent)
         {
             _response.Redirect(url, permanent);
@@ -201,6 +208,7 @@ namespace System.Web
 
         public void SetCookie(HttpCookie cookie) => Cookies.Set(cookie);
 
+        [Obsolete(UseEndAsync)]
         public void End() => AdapterFeature.EndAsync().GetAwaiter().GetResult();
 
         public void Write(char ch) => Output.Write(ch);
@@ -237,12 +245,15 @@ namespace System.Web
             }
         }
 
+        [Obsolete(UseWriteFileAsync)]
         public void WriteFile(string filename)
             => TransmitFile(filename);
 
+        [Obsolete(UseTransmitFileAsync)]
         public void TransmitFile(string filename)
             => TransmitFile(filename, 0, -1);
 
+        [Obsolete(UseTransmitFileAsync)]
         public void TransmitFile(string filename, long offset, long length)
             => _response.SendFileAsync(filename, offset, length >= 0 ? length : null).GetAwaiter().GetResult();
 

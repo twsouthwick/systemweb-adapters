@@ -22,6 +22,10 @@ namespace System.Web
 {
     public class HttpRequest
     {
+        internal const string UseGetInputStreamAsync = "Use GetInputStreamAsync instead";
+        internal const string UseGetTotalBytesAsync = "Use GetTotalBytesAsync instead";
+        internal const string UseBinaryReadAsync = "Use BinaryReadAsync instead";
+
         private readonly HttpRequestCore _request;
 
         private RequestHeaders? _typedHeaders;
@@ -44,7 +48,7 @@ namespace System.Web
             _requestFeature = FeatureReference<IHttpRequestAdapterFeature>.Default;
         }
 
-        private IHttpRequestAdapterFeature RequestFeature => _requestFeature.Fetch(_request.HttpContext.Features) ?? throw new InvalidOperationException("Please ensure you have added the System.Web adapters middleware.");
+        internal IHttpRequestAdapterFeature RequestFeature => _requestFeature.Fetch(_request.HttpContext.Features) ?? throw new InvalidOperationException("Please ensure you have added the System.Web adapters middleware.");
 
         internal RequestHeaders TypedHeaders => _typedHeaders ??= new(_request.Headers);
 
@@ -55,6 +59,9 @@ namespace System.Web
         public Uri Url => new(_request.GetEncodedUrl());
 
         public ReadEntityBodyMode ReadEntityBodyMode => RequestFeature.Mode;
+
+        [Obsolete(UseGetInputStreamAsync)]
+        public Stream InputStream => RequestFeature.InputStream;
 
         public Stream GetBufferlessInputStream() => RequestFeature.GetBufferlessInputStream();
 
@@ -150,8 +157,6 @@ namespace System.Web
             set => _request.ContentType = value;
         }
 
-        public Stream InputStream => RequestFeature.InputStream;
-
         public NameValueCollection ServerVariables => _serverVariables ??= _request.HttpContext.Features.GetRequired<IServerVariablesFeature>().ToNameValueCollection();
 
         public bool IsSecureConnection => _request.IsHttps;
@@ -187,6 +192,7 @@ namespace System.Web
 
         public Uri? UrlReferrer => TypedHeaders.Referer;
 
+        [Obsolete(UseGetTotalBytesAsync)]
         public int TotalBytes => (int)InputStream.Length;
 
         public bool IsAuthenticated => LogonUserIdentity?.IsAuthenticated ?? false;
@@ -221,33 +227,8 @@ namespace System.Web
 
         public NameValueCollection Params => _params ??= new ParamsCollection(_request);
 
-        public byte[] BinaryRead(int count)
-        {
-            if (count < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(count));
-            }
-
-            if (count == 0)
-            {
-                return Array.Empty<byte>();
-            }
-
-            var buffer = new byte[count];
-            var read = InputStream.Read(buffer);
-
-            if (read == 0)
-            {
-                return Array.Empty<byte>();
-            }
-
-            if (read < count)
-            {
-                Array.Resize(ref buffer, read);
-            }
-
-            return buffer;
-        }
+        [Obsolete(UseBinaryReadAsync)]
+        public byte[] BinaryRead(int count) => InputStream.BinaryRead(count);
 
         public void SaveAs(string filename, bool includeHeaders)
         {

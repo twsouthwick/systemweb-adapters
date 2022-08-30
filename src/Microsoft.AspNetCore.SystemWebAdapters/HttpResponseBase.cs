@@ -5,6 +5,8 @@ using System.Collections.Specialized;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.SystemWebAdapters;
 
 namespace System.Web
@@ -88,6 +90,7 @@ namespace System.Web
         public virtual void SetCookie(HttpCookie cookie) => throw new NotImplementedException();
 
         [SuppressMessage("Naming", "CA1716:Using a reserved keyword as the name of a virtual/interface member makes it harder for consumers in other languages to override/implement the member", Justification = Constants.ApiFromAspNet)]
+        [Obsolete(HttpResponse.UseEndAsync)]
         public virtual void End() => throw new NotImplementedException();
 
         public virtual void Write(char ch) => throw new NotImplementedException();
@@ -104,10 +107,13 @@ namespace System.Web
 
         public virtual void ClearHeaders() => throw new NotImplementedException();
 
+        [Obsolete(HttpResponse.UseWriteFileAsync)]
         public virtual void WriteFile(string filename) => throw new NotImplementedException();
 
+        [Obsolete(HttpResponse.UseTransmitFileAsync)]
         public virtual void TransmitFile(string filename) => throw new NotImplementedException();
 
+        [Obsolete(HttpResponse.UseTransmitFileAsync)]
         public virtual void TransmitFile(string filename, long offset, long length) => throw new NotImplementedException();
 
         [return: NotNullIfNotNull("response")]

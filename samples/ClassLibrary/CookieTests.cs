@@ -1,10 +1,11 @@
+using System.Threading.Tasks;
 using System.Web;
 
 namespace ClassLibrary;
 
 public class CookieTests
 {
-    public static void RequestCookies(HttpContext context)
+    public static Task RequestCookies(HttpContext context)
     {
         using (var writer = new SimpleJsonWriter(context.Response))
         {
@@ -22,10 +23,10 @@ public class CookieTests
             writer.Write("AfterAddHeader", context.Request.Headers["cookie"]);
         }
 
-        context.Response.End();
+        return context.Response.EndAsync();
     }
 
-    public static void ResponseCookies(HttpContext context, bool shareable)
+    public static Task ResponseCookies(HttpContext context, bool shareable)
     {
         using (var writer = new SimpleJsonWriter(context.Response))
         {
@@ -38,6 +39,6 @@ public class CookieTests
             writer.Write("AfterAddHeader", context.Response.Headers["set-cookie"]);
         }
 
-        context.Response.End();
+        return context.Response.EndAsync();
     }
 }

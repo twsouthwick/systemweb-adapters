@@ -155,6 +155,7 @@ namespace System.Web
         public System.Collections.Specialized.NameValueCollection Form { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
         public System.Collections.Specialized.NameValueCollection Headers { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
         public string HttpMethod { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
+        [System.ObsoleteAttribute("Use GetInputStreamAsync instead")]
         public System.IO.Stream InputStream { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
         public bool IsAuthenticated { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
         public bool IsLocal { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
@@ -168,6 +169,7 @@ namespace System.Web
         public System.Web.ReadEntityBodyMode ReadEntityBodyMode { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
         public string RequestType { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
         public System.Collections.Specialized.NameValueCollection ServerVariables { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
+        [System.ObsoleteAttribute("Use GetTotalBytesAsync instead")]
         public int TotalBytes { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
         public System.Uri Url { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
         public System.Uri UrlReferrer { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
@@ -176,10 +178,17 @@ namespace System.Web
         public string UserHostName { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
         public string[] UserLanguages { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
         public void Abort() { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
+        [System.ObsoleteAttribute("Use BinaryReadAsync instead")]
         public byte[] BinaryRead(int count) { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
         public System.IO.Stream GetBufferedInputStream() { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
         public System.IO.Stream GetBufferlessInputStream() { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
         public void SaveAs(string filename, bool includeHeaders) { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
+    }
+    public static partial class HttpRequestAsyncExtensions
+    {
+        public static System.Threading.Tasks.Task<byte[]> BinaryReadAsync(this System.Web.HttpRequest request, int count, System.Threading.CancellationToken token) { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
+        public static System.Threading.Tasks.Task<System.IO.Stream> GetInputStreamAsync(this System.Web.HttpRequest request, System.Threading.CancellationToken token) { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
+        public static System.Threading.Tasks.Task<int> GetTotalBytesAsync(this System.Web.HttpRequest request, System.Threading.CancellationToken token) { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
     }
     public abstract partial class HttpRequestBase
     {
@@ -194,6 +203,7 @@ namespace System.Web
         public virtual System.Web.HttpCookieCollection Cookies { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
         public virtual System.Collections.Specialized.NameValueCollection Headers { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
         public virtual string HttpMethod { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
+        [System.ObsoleteAttribute("Use GetInputStreamAsync instead")]
         public virtual System.IO.Stream InputStream { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
         public virtual bool IsAuthenticated { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
         public virtual bool IsLocal { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
@@ -206,6 +216,7 @@ namespace System.Web
         public virtual string RawUrl { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
         public virtual string RequestType { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
         public virtual System.Collections.Specialized.NameValueCollection ServerVariables { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
+        [System.ObsoleteAttribute("Use GetTotalBytesAsync instead")]
         public virtual int TotalBytes { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
         public virtual System.Uri Url { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
         public virtual System.Uri UrlReferrer { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
@@ -214,6 +225,7 @@ namespace System.Web
         public virtual string UserHostName { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
         public virtual string[] UserLanguages { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
         public virtual void Abort() { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
+        [System.ObsoleteAttribute("Use BinaryReadAsync instead")]
         public virtual byte[] BinaryRead(int count) { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
         public virtual System.IO.Stream GetBufferedInputStream() { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
         public virtual System.IO.Stream GetBufferlessInputStream() { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
@@ -231,6 +243,7 @@ namespace System.Web
         public override System.Web.HttpCookieCollection Cookies { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
         public override System.Collections.Specialized.NameValueCollection Headers { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
         public override string HttpMethod { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
+        [System.ObsoleteAttribute("Use GetInputStreamAsync instead")]
         public override System.IO.Stream InputStream { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
         public override bool IsAuthenticated { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
         public override bool IsLocal { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
@@ -243,6 +256,7 @@ namespace System.Web
         public override string RawUrl { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
         public override string RequestType { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
         public override System.Collections.Specialized.NameValueCollection ServerVariables { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
+        [System.ObsoleteAttribute("Use GetTotalBytesAsync instead")]
         public override int TotalBytes { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
         public override System.Uri Url { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
         public override System.Uri UrlReferrer { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
@@ -251,6 +265,7 @@ namespace System.Web
         public override string UserHostName { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
         public override string[] UserLanguages { get { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");} }
         public override void Abort() { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
+        [System.ObsoleteAttribute("Use BinaryReadAsync instead")]
         public override byte[] BinaryRead(int count) { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
         public override System.IO.Stream GetBufferedInputStream() { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
         public override System.IO.Stream GetBufferlessInputStream() { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
@@ -279,16 +294,31 @@ namespace System.Web
         public void Clear() { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
         public void ClearContent() { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
         public void ClearHeaders() { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
+        [System.ObsoleteAttribute("Use EndAsync instead as this will potentially cause sync over async")]
         public void End() { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
+        [System.ObsoleteAttribute("Use RedirectPermanentAsync instead as this will potentially cause sync over async")]
         public void RedirectPermanent(string url) { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
+        [System.ObsoleteAttribute("Use RedirectPermanentAsync instead as this will potentially cause sync over async")]
         public void RedirectPermanent(string url, bool endResponse) { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
         public void SetCookie(System.Web.HttpCookie cookie) { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
+        [System.ObsoleteAttribute("Use TransmitFileAsync instead as this will potentially cause sync over async")]
         public void TransmitFile(string filename) { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
+        [System.ObsoleteAttribute("Use TransmitFileAsync instead as this will potentially cause sync over async")]
         public void TransmitFile(string filename, long offset, long length) { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
         public void Write(char ch) { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
         public void Write(object obj) { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
         public void Write(string s) { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
+        [System.ObsoleteAttribute("Use WriteFileAsync instead as this will potentially cause sync over async")]
         public void WriteFile(string filename) { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
+    }
+    public static partial class HttpResponseAsyncExtensions
+    {
+        public static System.Threading.Tasks.Task EndAsync(this System.Web.HttpResponse response) { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
+        public static System.Threading.Tasks.Task RedirectPermanentAsync(this System.Web.HttpResponse response, string url) { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
+        public static System.Threading.Tasks.Task RedirectPermanentAsync(this System.Web.HttpResponse response, string url, bool endResponse) { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
+        public static System.Threading.Tasks.Task TransmitFileAsync(this System.Web.HttpResponse response, string filename, long offset, long length, System.Threading.CancellationToken token) { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
+        public static System.Threading.Tasks.Task TransmitFileAsync(this System.Web.HttpResponse response, string filename, System.Threading.CancellationToken token) { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
+        public static System.Threading.Tasks.Task WriteFileAsync(this System.Web.HttpResponse response, string filename, System.Threading.CancellationToken token) { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
     }
     public partial class HttpResponseBase
     {
@@ -314,13 +344,17 @@ namespace System.Web
         public virtual void Clear() { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
         public virtual void ClearContent() { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
         public virtual void ClearHeaders() { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
+        [System.ObsoleteAttribute("Use EndAsync instead as this will potentially cause sync over async")]
         public virtual void End() { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
         public virtual void SetCookie(System.Web.HttpCookie cookie) { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
+        [System.ObsoleteAttribute("Use TransmitFileAsync instead as this will potentially cause sync over async")]
         public virtual void TransmitFile(string filename) { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
+        [System.ObsoleteAttribute("Use TransmitFileAsync instead as this will potentially cause sync over async")]
         public virtual void TransmitFile(string filename, long offset, long length) { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
         public virtual void Write(char ch) { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
         public virtual void Write(object obj) { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
         public virtual void Write(string s) { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
+        [System.ObsoleteAttribute("Use WriteFileAsync instead as this will potentially cause sync over async")]
         public virtual void WriteFile(string filename) { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
     }
     public partial class HttpResponseWrapper : System.Web.HttpResponseBase
@@ -347,13 +381,17 @@ namespace System.Web
         public override void Clear() { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
         public override void ClearContent() { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
         public override void ClearHeaders() { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
+        [System.ObsoleteAttribute("Use EndAsync instead as this will potentially cause sync over async")]
         public override void End() { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
         public override void SetCookie(System.Web.HttpCookie cookie) { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
+        [System.ObsoleteAttribute("Use TransmitFileAsync instead as this will potentially cause sync over async")]
         public override void TransmitFile(string filename) { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
+        [System.ObsoleteAttribute("Use TransmitFileAsync instead as this will potentially cause sync over async")]
         public override void TransmitFile(string filename, long offset, long length) { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
         public override void Write(char ch) { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
         public override void Write(object obj) { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
         public override void Write(string s) { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
+        [System.ObsoleteAttribute("Use WriteFileAsync instead as this will potentially cause sync over async")]
         public override void WriteFile(string filename) { throw new System.PlatformNotSupportedException("Only supported when running on ASP.NET Core or System.Web");}
     }
     public sealed partial class HttpRuntime

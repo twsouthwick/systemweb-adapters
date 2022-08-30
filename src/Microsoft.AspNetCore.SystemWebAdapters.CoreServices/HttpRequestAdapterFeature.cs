@@ -95,6 +95,8 @@ internal class HttpRequestAdapterFeature : IHttpRequestAdapterFeature, IHttpRequ
         stream.Position = 0;
 
         Mode = ReadEntityBodyMode.Classic;
+
+        return stream;
     }
 
     public void Dispose() => _bufferedStream?.Dispose();

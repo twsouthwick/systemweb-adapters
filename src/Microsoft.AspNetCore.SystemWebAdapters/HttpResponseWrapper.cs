@@ -105,12 +105,16 @@ namespace System.Web
 
         public override void ClearHeaders() => _response.ClearHeaders();
 
+        [Obsolete(HttpResponse.UseEndAsync)]
         public override void End() => _response.End();
 
+        [Obsolete(HttpResponse.UseTransmitFileAsync)]
         public override void TransmitFile(string filename) => _response.TransmitFile(filename);
 
+        [Obsolete(HttpResponse.UseTransmitFileAsync)]
         public override void TransmitFile(string filename, long offset, long length) => _response.TransmitFile(filename, offset, length);
 
+        [Obsolete(HttpResponse.UseWriteFileAsync)]
         public override void WriteFile(string filename) => _response.WriteFile(filename);
     }
 }
